@@ -4,11 +4,16 @@ const app = express()
 const tasks = require("./routes/tasks")
 const connectDB = require('./db/connect')
 const notFound = require('./middleware/not-found')
+const errorHandlerMiddlware = require('./middleware/error-handler')
 
 app.use(express.json())
-app.use(notFound)
 
+// Routes
 app.use("/api/v1/tasks", tasks)
+
+app.use(notFound)
+app.use(errorHandlerMiddlware)
+
 
 const port = process.env.PORT
 const start = async () => {
